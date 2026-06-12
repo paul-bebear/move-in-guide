@@ -245,6 +245,19 @@ select, input[type="text"], input[type="number"], textarea {
 .add-form .form-row > * { flex: 1; min-width: 160px; }
 .add-form textarea { resize: vertical; min-height: 60px; }
 
+.howto {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+}
+.howto summary { cursor: pointer; font-weight: 600; }
+.howto ol { margin: 10px 0 4px; padding-left: 22px; display: grid; gap: 8px; }
+.howto li { color: var(--ink-soft); }
+.howto li strong { color: var(--ink); }
+
 .upload-zone {
   display: block;
   cursor: pointer;

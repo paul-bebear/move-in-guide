@@ -4,6 +4,12 @@
    write access is controlled by row-level security policies in supabase/schema.sql. */
 
 window.MIG_CONFIG = {
+  // Shown in the footer so students know who to ask. Update on yearly handoff.
+  contact: {
+    name: "Paul",
+    email: "pbebear@icloud.com",
+  },
+
   supabaseUrl: "https://qpisfkcwxounucbrvpcn.supabase.co",
   supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwaXNma2N3eG91bnVjYnJ2cGNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyOTgwMTEsImV4cCI6MjA5Njg3NDAxMX0.CJrhP5fouoZPgv77rzCpEkpqhEToOtOdZpWFCIXmER4",
 };

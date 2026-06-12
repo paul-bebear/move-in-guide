@@ -74,10 +74,20 @@ Set the **real school coordinates** in each `data/<city>.js` (the `anchors` arra
 `school` entry). Right-click your campus in Google Maps → click the coordinates to copy
 them.
 
-### Apartment uploads
+### Apartment listings
 
-Upload a CSV or JSON on the Apartments tab. Recognized columns (extra columns are ignored,
-all optional except `name`):
+Three ways to build a list on the Apartments tab (all stored locally per browser):
+
+1. **Add manually** — the "Add a listing" form, one flat at a time while browsing.
+2. **Upload CSV/JSON** — uploads merge with existing entries (matched by url). Excel
+   users: File → Save As → CSV.
+3. **AI-assisted** — the "Copy the AI prompt" button produces a prompt that turns pasted
+   listing links into a ready-to-upload CSV.
+
+Missing coordinates? The **"Find missing coordinates"** button geocodes street addresses
+via OpenStreetMap (~1/second, so a long list takes a minute).
+
+Recognized columns (extra columns are ignored, all optional except `name`):
 
 | column | meaning |
 |---|---|

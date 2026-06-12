@@ -156,9 +156,25 @@ const App = (() => {
 
     const root = el(`<div></div>`);
     root.appendChild(el(`
-      <p class="page-intro">Upload a <strong>CSV or JSON</strong> of apartment listings and rank them by
+      <p class="page-intro">Collect apartment listings as you browse, then rank them by
       distance to the place you care about most — like school. Your data stays in this browser only.
       <a href="#" id="dl-template">Download the CSV template</a> to see the expected columns.</p>`));
+
+    root.appendChild(el(`
+      <details class="howto">
+        <summary>📖 Three easy ways to build your list</summary>
+        <ol>
+          <li><strong>One at a time (easiest):</strong> while browsing Idealista/Spotahome/etc.,
+            copy the listing link and use <em>"Add a listing"</em> below. 30 seconds per flat.</li>
+          <li><strong>Spreadsheet:</strong> keep a Google Sheet or Excel file with our columns
+            (download the template above), then <em>File → Download / Save As → CSV</em> and
+            upload it here. Tip: leave lat/lng empty and use the
+            <em>"Find missing coordinates"</em> button afterwards.</li>
+          <li><strong>AI-assisted:</strong> <button type="button" class="btn subtle" id="copy-ai-prompt">📋 Copy the AI prompt</button>
+            — paste it into Claude/ChatGPT (or an agentic browser like Comet), follow with your
+            listing links, and it returns a ready-to-upload CSV in our exact format.</li>
+        </ol>
+      </details>`));
 
     // Upload zone
     const zone = el(`
@@ -184,6 +200,7 @@ const App = (() => {
         <label class="field" id="custom-lng-wrap" hidden>Longitude
           <input type="number" step="any" id="custom-lng" placeholder="-3.7035">
         </label>
+        <button class="btn" id="geocode-apts" hidden>📍 Find missing coordinates</button>
         <button class="btn subtle" id="clear-apts">Clear my listings</button>
       </div>`);
     root.appendChild(anchorRow);
@@ -206,6 +223,14 @@ const App = (() => {
       const anchor = currentAnchor();
       const apts = load("apartments", []);
       listWrap.innerHTML = "";
+
+      const missing = apts.filter((a) =>
+        (a.lat == null || a.lng == null) && (a.address || a.neighborhood));
+      const geoBtn = root.querySelector("#geocode-apts");
+      if (!geoBtn.dataset.busy) {
+        geoBtn.hidden = !missing.length;
+        geoBtn.textContent = `📍 Find missing coordinates (${missing.length})`;
+      }
 
       if (!apts.length) {
         listWrap.appendChild(el(`<div class="empty-state">
@@ -275,7 +300,15 @@ const App = (() => {
           }
           const apts = records.map(normalizeApartment);
           if (!apts.length) { alert("No listings found in that file."); return; }
-          save("apartments", apts);
+          // Merge with what's already there: same url (or same name when no url)
+          // updates the existing entry instead of duplicating it.
+          const merged = load("apartments", []);
+          apts.forEach((n) => {
+            const i = merged.findIndex((e) =>
+              n.url ? e.url === n.url : (!e.url && e.name === n.name));
+            if (i >= 0) merged[i] = n; else merged.push(n);
+          });
+          save("apartments", merged);
           renderList();
         } catch (e) {
           alert("Couldn't read that file: " + e.message);
@@ -320,6 +353,97 @@ const App = (() => {
         'Bright 2BR near school,https://example.com/listing,Calle Example 12,Malasaña,68,1400,2,40.4259,-3.7038,"Elevator, furnished"\n',
         "text/csv");
     });
+
+    root.querySelector("#copy-ai-prompt").addEventListener("click", (ev) => {
+      const prompt =
+`I'm collecting apartment listings in ${c.name}, ${c.country}. I'll paste listing links and/or copied text from listings below. Build me a CSV file with exactly this header:
+
+name,url,address,neighborhood,sqm,price,bedrooms,lat,lng,notes
+
+One row per listing. Rules:
+- price = monthly rent, numbers only (no currency symbol)
+- sqm = size in square meters, numbers only
+- lat/lng = your best approximate coordinates for the address in ${c.name} (4+ decimal places); leave empty if you can't place it
+- notes = anything notable (furnished, floor, bills included...)
+- quote any field containing commas
+- output ONLY the CSV, no commentary
+
+Here are the listings:
+`;
+      navigator.clipboard.writeText(prompt).then(() => {
+        ev.target.textContent = "✅ Copied!";
+        setTimeout(() => { ev.target.textContent = "📋 Copy the AI prompt"; }, 2000);
+      });
+    });
+
+    // Geocode missing coordinates via OpenStreetMap Nominatim (free, ~1 req/sec).
+    root.querySelector("#geocode-apts").addEventListener("click", async (ev) => {
+      const btn = ev.target;
+      if (btn.dataset.busy) return;
+      btn.dataset.busy = "1";
+      const apts = load("apartments", []);
+      const missing = apts.filter((a) =>
+        (a.lat == null || a.lng == null) && (a.address || a.neighborhood));
+      let done = 0, found = 0;
+      for (const a of missing) {
+        btn.textContent = `📍 Looking up ${++done}/${missing.length}…`;
+        const q = encodeURIComponent(`${a.address || a.neighborhood}, ${c.name}`);
+        try {
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/search?q=${q}&format=json&limit=1`);
+          const hits = await res.json();
+          if (hits[0]) {
+            a.lat = parseFloat(hits[0].lat);
+            a.lng = parseFloat(hits[0].lon);
+            found++;
+          }
+        } catch { /* skip this one, keep going */ }
+        if (done < missing.length) await new Promise((r) => setTimeout(r, 1100));
+      }
+      save("apartments", apts);
+      delete btn.dataset.busy;
+      if (found < missing.length) {
+        alert(`Found coordinates for ${found} of ${missing.length} — the rest may need a more complete street address.`);
+      }
+      renderList();
+    });
+
+    const addForm = el(`
+      <details class="howto">
+        <summary>➕ Add a listing manually</summary>
+        <form class="add-form" style="margin-top:10px">
+          <div class="form-row">
+            <input type="text" name="name" placeholder="Name, e.g. 'Bright 2BR Malasaña' (required)" required>
+            <input type="url" name="url" placeholder="Listing link">
+          </div>
+          <div class="form-row">
+            <input type="number" name="price" placeholder="Rent €/month" min="0">
+            <input type="number" name="sqm" placeholder="Size m²" min="0">
+            <input type="number" name="bedrooms" placeholder="Bedrooms" min="0">
+          </div>
+          <div class="form-row">
+            <input type="text" name="address" placeholder="Street address (for coordinates)">
+            <input type="text" name="neighborhood" placeholder="Neighborhood">
+          </div>
+          <textarea name="notes" placeholder="Notes — furnished? bills included? vibes?"></textarea>
+          <div><button class="btn primary" type="submit">Add listing</button></div>
+        </form>
+      </details>`);
+    addForm.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const f = new FormData(e.target);
+      const apts = load("apartments", []);
+      apts.push(normalizeApartment({
+        name: f.get("name"), url: f.get("url"), price: f.get("price"),
+        sqm: f.get("sqm"), bedrooms: f.get("bedrooms"),
+        address: f.get("address"), neighborhood: f.get("neighborhood"),
+        notes: f.get("notes"),
+      }));
+      save("apartments", apts);
+      e.target.reset();
+      renderList();
+    });
+    root.insertBefore(addForm, anchorRow);
 
     renderList();
     return root;
@@ -747,6 +871,15 @@ const App = (() => {
       render();
     });
     window.addEventListener("hashchange", render);
+
+    // maintainer contact (footer)
+    const contact = (window.MIG_CONFIG || {}).contact;
+    const contactLine = document.getElementById("contact-line");
+    if (contact && contact.email && contactLine) {
+      contactLine.innerHTML =
+        `Questions, corrections, or a city to add? Reach out to ${esc(contact.name || "the maintainer")} → ` +
+        `<a href="mailto:${esc(contact.email)}">${esc(contact.email)}</a>`;
+    }
 
     // personal data backup buttons (footer)
     const exportBtn = document.getElementById("export-personal");
