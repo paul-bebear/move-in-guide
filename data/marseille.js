@@ -8,11 +8,9 @@ App.registerCity({
   emoji: "🇫🇷",
 
   anchors: [
-    { id: "school", name: "School campus (TODO: set real coords in data/marseille.js)", lat: 43.2965, lng: 5.3698 },
-    { id: "vieuxport", name: "Vieux-Port", lat: 43.2951, lng: 5.3743 },
-    { id: "stcharles", name: "Gare Saint-Charles", lat: 43.3027, lng: 5.3806 },
-    { id: "laplaine", name: "La Plaine / Cours Julien", lat: 43.2933, lng: 5.3854 },
-    { id: "prado", name: "Plages du Prado", lat: 43.2625, lng: 5.3700 },
+    { id: "school", name: "🎓 School (TODO: set real coords in data/marseille.js)", lat: 43.2965, lng: 5.3698 },
+    { id: "center", name: "🏛️ City center (Vieux-Port)", lat: 43.2951, lng: 5.3743 },
+    { id: "party", name: "🎉 Party area (Cours Julien / La Plaine)", lat: 43.2933, lng: 5.3854 },
   ],
 
   checklist: [

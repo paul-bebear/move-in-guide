@@ -10,10 +10,9 @@ App.registerCity({
   emoji: "🇮🇹",
 
   anchors: [
-    { id: "school", name: "School campus (TODO: set real coords in data/milan.js)", lat: 45.4642, lng: 9.19 },
-    { id: "duomo", name: "Duomo (city center)", lat: 45.4642, lng: 9.19 },
-    { id: "centrale", name: "Milano Centrale station", lat: 45.4862, lng: 9.2046 },
-    { id: "navigli", name: "Navigli", lat: 45.4485, lng: 9.1764 },
+    { id: "school", name: "🎓 School (TODO: set real coords in data/milan.js)", lat: 45.4642, lng: 9.19 },
+    { id: "center", name: "🏛️ City center (Duomo)", lat: 45.4642, lng: 9.19 },
+    { id: "party", name: "🎉 Party area (Navigli)", lat: 45.4485, lng: 9.1764 },
   ],
 
   checklist: [

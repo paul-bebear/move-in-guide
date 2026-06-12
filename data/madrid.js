@@ -8,13 +8,11 @@ App.registerCity({
   country: "Spain",
   emoji: "🇪🇸",
 
-  // Points you can rank apartments against.
+  // Points you can rank apartments against: school, city center, party area.
   anchors: [
-    { id: "school", name: "School campus (TODO: set real coords in data/madrid.js)", lat: 40.4169, lng: -3.7035 },
-    { id: "sol", name: "Puerta del Sol (city center)", lat: 40.4169, lng: -3.7035 },
-    { id: "retiro", name: "Retiro Park", lat: 40.4153, lng: -3.6845 },
-    { id: "atocha", name: "Atocha train station", lat: 40.4066, lng: -3.6892 },
-    { id: "airport", name: "Madrid–Barajas Airport (T4)", lat: 40.4915, lng: -3.5928 },
+    { id: "school", name: "🎓 School (TODO: set real coords in data/madrid.js)", lat: 40.4169, lng: -3.7035 },
+    { id: "center", name: "🏛️ City center (Puerta del Sol)", lat: 40.4169, lng: -3.7035 },
+    { id: "party", name: "🎉 Party area (Malasaña)", lat: 40.4259, lng: -3.7038 },
   ],
 
   checklist: [

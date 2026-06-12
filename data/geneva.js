@@ -9,11 +9,9 @@ App.registerCity({
   emoji: "🇨🇭",
 
   anchors: [
-    { id: "school", name: "School campus (TODO: set real coords in data/geneva.js)", lat: 46.2044, lng: 6.1432 },
-    { id: "cornavin", name: "Gare Cornavin (main station)", lat: 46.2102, lng: 6.1421 },
-    { id: "jetdeau", name: "Jet d'Eau / lakefront", lat: 46.2074, lng: 6.1559 },
-    { id: "plainpalais", name: "Plaine de Plainpalais", lat: 46.1972, lng: 6.1413 },
-    { id: "airport", name: "Geneva Airport (GVA)", lat: 46.2381, lng: 6.1090 },
+    { id: "school", name: "🎓 School (TODO: set real coords in data/geneva.js)", lat: 46.2044, lng: 6.1432 },
+    { id: "center", name: "🏛️ City center (Rues Basses / Molard)", lat: 46.2036, lng: 6.1481 },
+    { id: "party", name: "🎉 Party area (Plainpalais / Les Bains)", lat: 46.1972, lng: 6.1413 },
   ],
 
   checklist: [

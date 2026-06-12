@@ -8,11 +8,9 @@ App.registerCity({
   emoji: "🇫🇷",
 
   anchors: [
-    { id: "school", name: "School campus (TODO: set real coords in data/lyon.js)", lat: 45.7640, lng: 4.8357 },
-    { id: "bellecour", name: "Place Bellecour", lat: 45.7578, lng: 4.8320 },
-    { id: "partdieu", name: "Gare Part-Dieu", lat: 45.7603, lng: 4.8590 },
-    { id: "terreaux", name: "Hôtel de Ville / Terreaux", lat: 45.7675, lng: 4.8336 },
-    { id: "confluence", name: "Confluence", lat: 45.7406, lng: 4.8158 },
+    { id: "school", name: "🎓 School (TODO: set real coords in data/lyon.js)", lat: 45.7640, lng: 4.8357 },
+    { id: "center", name: "🏛️ City center (Place Bellecour)", lat: 45.7578, lng: 4.8320 },
+    { id: "party", name: "🎉 Party area (Terreaux / Hôtel de Ville)", lat: 45.7675, lng: 4.8336 },
   ],
 
   checklist: [

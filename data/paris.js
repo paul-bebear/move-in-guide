@@ -8,11 +8,9 @@ App.registerCity({
   emoji: "🇫🇷",
 
   anchors: [
-    { id: "school", name: "School campus (TODO: set real coords in data/paris.js)", lat: 48.8566, lng: 2.3522 },
-    { id: "chatelet", name: "Châtelet (center)", lat: 48.8583, lng: 2.3470 },
-    { id: "garedunord", name: "Gare du Nord", lat: 48.8809, lng: 2.3553 },
-    { id: "bastille", name: "Bastille", lat: 48.8532, lng: 2.3692 },
-    { id: "montparnasse", name: "Montparnasse", lat: 48.8404, lng: 2.3216 },
+    { id: "school", name: "🎓 School (TODO: set real coords in data/paris.js)", lat: 48.8566, lng: 2.3522 },
+    { id: "center", name: "🏛️ City center (Châtelet)", lat: 48.8583, lng: 2.3470 },
+    { id: "party", name: "🎉 Party area (Oberkampf / Bastille)", lat: 48.8610, lng: 2.3720 },
   ],
 
   checklist: [
