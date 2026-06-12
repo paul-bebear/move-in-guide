@@ -1,0 +1,6 @@
+name,url,address,neighborhood,sqm,price,bedrooms,lat,lng,notes
+Bright 2BR with balcony,https://www.idealista.com/inmueble/example1,Calle del Pez 14,Malasaña,68,1450,2,40.4259,-3.7038,"Furnished, elevator, 3rd floor"
+Cozy studio near Retiro,https://www.idealista.com/inmueble/example2,Calle de Ibiza 22,Retiro,40,950,1,40.4178,-3.6770,"Quiet street, gas heating"
+Shared flat room (4BR),https://www.idealista.com/inmueble/example3,Calle de Argumosa 9,Lavapiés,15,550,1,40.4087,-3.6997,"Room in student flat, bills included"
+Modern 1BR by Atocha,https://www.spotahome.com/example4,Paseo de las Delicias 30,Delicias,52,1200,1,40.4015,-3.6940,"AC, washing machine, near cercanías"
+Classic 3BR to share,https://www.idealista.com/inmueble/example5,Calle de Fuencarral 80,Chueca,95,2100,3,40.4266,-3.7008,"Perfect for splitting 3 ways"

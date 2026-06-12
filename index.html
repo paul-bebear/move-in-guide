@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Move-In Guide</title>
+  <meta name="theme-color" content="#d95d39">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark">🧳</span>
+        <div>
+          <h1>Move-In Guide</h1>
+          <p class="tagline">Everything you need when switching campuses</p>
+        </div>
+      </div>
+      <label class="city-picker">
+        <span>City</span>
+        <select id="city-select"></select>
+      </label>
+    </div>
+    <nav class="tabs" id="tabs">
+      <a href="#/apartments" data-route="apartments">🏠 Apartments</a>
+      <a href="#/checklist" data-route="checklist">📋 Arrival Checklist</a>
+      <a href="#/everyday" data-route="everyday">🚲 Everyday Life</a>
+      <a href="#/places" data-route="places">🍽️ Places &amp; Food</a>
+      <a href="#/catalog" data-route="catalog">⭐ Catalog</a>
+      <a href="#/tips" data-route="tips">💡 Tips &amp; Tricks</a>
+    </nav>
+  </header>
+
+  <main id="view" class="view"></main>
+
+  <footer class="site-footer">
+    <p>Built by students, for students. Add your finds and pass it on to next year's class. 💛</p>
+    <p class="footer-tools">
+      Your personal data (checklists, apartments, additions) lives in this browser.
+      <button class="btn subtle" id="export-personal">⬇️ Back it up</button>
+      <button class="btn subtle" id="import-personal">⬆️ Restore a backup</button>
+      <input type="file" id="import-personal-file" accept=".json,application/json" hidden>
+    </p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="data/madrid.js"></script>
+  <script src="data/milan.js"></script>
+  <script src="data/geneva.js"></script>
+  <script src="data/marseille.js"></script>
+  <script src="data/lyon.js"></script>
+  <script src="data/paris.js"></script>
+  <script>App.start();</script>
+</body>
+</html>
